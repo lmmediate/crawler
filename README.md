@@ -1,2 +1,3 @@
-# server
-Server part for Shops app.
+# Crawler.
+Crawler part for Easy Sales project.
+
