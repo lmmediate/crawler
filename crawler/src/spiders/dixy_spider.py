@@ -1,4 +1,4 @@
-#coding=utf-8
+# coding=utf-8
 
 import scrapy
 import sys
@@ -15,7 +15,6 @@ import text_processor as proc
 class QuotesSpider(scrapy.Spider):
     name = 'dixy'
     start_urls = sel.urls
-
 
     def parse(self, response):
         for item in response.xpath(sel.item):
