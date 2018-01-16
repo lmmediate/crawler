@@ -21,10 +21,10 @@ class QuotesSpider(scrapy.Spider):
             yield {
                 'name': proc.process(item.xpath(sel.name).extract_first()),
                 'category': proc.process(item.xpath(sel.category).extract_first()),
-                'img_url': sel.url_core + item.xpath(sel.img).extract_first(),
-                'new_price': proc.concat(item.xpath(sel.new_price_left).extract_first(default='0'),
+                'imgUrl': sel.url_core + item.xpath(sel.img).extract_first(),
+                'newPrice': proc.concat(item.xpath(sel.new_price_left).extract_first(default='0'),
                     item.xpath(sel.new_price_right).extract_first(default='0'), '.'),
-                'old_price': proc.concat(item.xpath(sel.old_price_left).extract_first(default='0'), 
+                'oldPrice': proc.concat(item.xpath(sel.old_price_left).extract_first(default='0'), 
                     item.xpath(sel.old_price_right).extract_first(default='0'), '.'),
                 'discount': proc.process(item.xpath(sel.discount).extract_first()),
                 'date': proc.process(item.xpath(sel.date).extract_first()),
