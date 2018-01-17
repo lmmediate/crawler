@@ -3,6 +3,7 @@
 import scrapy
 import sys
 from time import time, gmtime, strftime
+from json import dumps
 import requests
 
 # TODO: Fix relative paths.
@@ -35,7 +36,7 @@ class QuotesSpider(scrapy.Spider):
                 'condition': proc.process(item.xpath(sel.CONDITION).extract_first(default='-')),
             }
 
-            requests.post('localhost:8080/api/sales', data=json)
+            requests.post('http://localhost:8080/api/sales/', data=dumps(json))
             yield json
 
 
