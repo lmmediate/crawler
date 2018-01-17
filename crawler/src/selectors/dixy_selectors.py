@@ -2,8 +2,8 @@
 
 # Start urls.
 #
-urls = ['https://dixy.ru/akcii/skidki-nedeli']
-url_core = 'https://dixy.ru'
+URLS = ['https://dixy.ru/akcii/skidki-nedeli']
+URL_CORE = 'https://dixy.ru'
 
 
 # Item attributes.
@@ -11,37 +11,36 @@ url_core = 'https://dixy.ru'
 
 # Root node.
 #
-item = '//div[contains(@class, "elem-product ")]'
+ITEM = '//div[contains(@class, "elem-product ")]'
 
 # Inner repetitive divs.
 #
-description = 'div[@class="elem-product__description"]'
-info = 'div[@class="elem-product__info"]'
-price_container = info + '/div[@class="elem-product__price-container"]'
-prices = price_container + '/div[@class="elem-product__prices"]'
+DESCRIPTION = '//div[@class="elem-product__description"]'
+INFO = '//div[@class="elem-product__info"]'
+PRICE_CONTAINER = INFO + '/div[@class="elem-product__price-container"]'
+PRICES = PRICE_CONTAINER + '/div[@class="elem-product__prices"]'
 
-img = info + '/div[@class="elem-product__image"]/img/@src'
-name = description + '/div[contains(@class, "product-name")]/text()'
-category = description + '/div[@class="product-category"]/child::text()[2]'
-new_price_left = prices + '/div[@class="price-left"]/span/text()'
-new_price_right = prices + '/div[@class="price-right"]/span/text()'
-old_price_left = prices + '/div[@class="price-right"]/div/span[@class="price-f\
-        ull__integer"]/text()'
-old_price_right = prices + '/div[@class="price-right"]/div/span[@class="price\
-        -full__float"]/text()'
-discount = price_container + '/div[contains(@class,"discount")]/span[@class="v\
-        alue"]/text()' + ' | ' + price_container + '/div[@class="just-now"]/te\
-        xt()'
-condition = price_container + '/div[contains(@class,"promopack")]/div[@class="\
-        text"]/text()'
-date = 'div[contains(@class, "elem-badge-cornered")]/text()'
+IMG = INFO + '/div[@class="elem-product__image"]/img/@src'
+NAME = DESCRIPTION + '/div[contains(@class, "product-name")]/text()'
+CATEGORY = DESCRIPTION + '/div[@class="product-category"]/child::text()[2]'
+NEW_PRICE_LEFT = PRICES + '/div[@class="price-left"]/span/text()'
+NEW_PRICE_RIGHT = PRICES + '/div[@class="price-right"]/span/text()'
+OLD_PRICE_LEFT = PRICES + '/div[@class="price-right"]/div/span[@class="price-f\
+ull__integer"]/text()'
+OLD_PRICE_RIGHT = PRICES + '/div[@class="price-right"]/div/span[@class="price-\
+full__float"]/text()'
+DISCOUNT = PRICE_CONTAINER + '/div[contains(@class,"discount")]/span[@class="v\
+alue"]/text()' + ' | ' + PRICE_CONTAINER + '/div[@class="just-now"]/text()'
+CONDITION = PRICE_CONTAINER + '/div[contains(@class,"promopack")]/div[@class="\
+text"]/text()'
+DATE = 'div[contains(@class, "elem-badge-cornered")]/text()'
 
 
 # Pagination selector.
 #
 # next_page = '//li[@class="next"]/a/@href'
-next_page = '//div[contains(@class, "elem-pagination")]/a[contains(@class, "el\
-        em-pagination__btn--next")]/@href'
+NEXT_PAGE = '//div[contains(@class, "elem-pagination")]/a[contains(@class, "el\
+em-pagination__btn--next")]/@href'
 
 # EOF
 
