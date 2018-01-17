@@ -3,6 +3,7 @@
 import scrapy
 import sys
 from time import time, gmtime, strftime
+import requests
 
 # TODO: Fix relative paths.
 #
@@ -18,7 +19,7 @@ class QuotesSpider(scrapy.Spider):
 
     def parse(self, response):
         for item in response.xpath(sel.ITEM):
-            yield {
+            json = {
                 'name': proc.process(item.xpath(sel.NAME).extract_first()),
                 'category': proc.process(item.xpath(sel.CATEGORY).extract_first()),
                 'imageUrl': sel.URL_CORE + item.xpath(sel.IMG).extract_first(),
@@ -33,6 +34,11 @@ class QuotesSpider(scrapy.Spider):
                 'crawlDate': strftime('%Y-%m-%d', gmtime()),
                 'condition': proc.process(item.xpath(sel.CONDITION).extract_first(default='-')),
             }
+
+            requests.post('localhost:8080/api/sales', data=json)
+            yield json
+
+
 
         next_page = response.xpath(sel.NEXT_PAGE).extract_first()
 
