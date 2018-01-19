@@ -17,7 +17,7 @@ import text_processor as proc
 class DixySpider(scrapy.Spider):
     name = 'dixy'
     start_urls = sel.URLS
-    header = {'content-type': 'applications/json'}
+    headers = {'Content-Type': 'application/json'}
 
     def parse(self, response):
         for item in response.xpath(sel.ITEM):
@@ -37,7 +37,7 @@ class DixySpider(scrapy.Spider):
                 'condition': proc.process(item.xpath(sel.CONDITION).extract_first(default='-')),
             }
 
-            # requests.post('http://localhost:8080/api/sales/', data=dumps(json_data), headers='')
+            requests.post('http://localhost:8080/api/sales/', data=dumps(json_data), headers=self.headers)
             yield json_data
 
         next_page = response.xpath(sel.NEXT_PAGE).extract_first()
