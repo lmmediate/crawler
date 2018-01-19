@@ -14,13 +14,14 @@ import dixy_selectors as sel
 import text_processor as proc
 
 
-class QuotesSpider(scrapy.Spider):
+class DixySpider(scrapy.Spider):
     name = 'dixy'
     start_urls = sel.URLS
+    header = {'content-type': 'applications/json'}
 
     def parse(self, response):
         for item in response.xpath(sel.ITEM):
-            json = {
+            json_data = {
                 'name': proc.process(item.xpath(sel.NAME).extract_first()),
                 'category': proc.process(item.xpath(sel.CATEGORY).extract_first()),
                 'imageUrl': sel.URL_CORE + item.xpath(sel.IMG).extract_first(),
@@ -36,10 +37,8 @@ class QuotesSpider(scrapy.Spider):
                 'condition': proc.process(item.xpath(sel.CONDITION).extract_first(default='-')),
             }
 
-            requests.post('http://localhost:8080/api/sales/', data=dumps(json))
-            yield json
-
-
+            # requests.post('http://localhost:8080/api/sales/', data=dumps(json_data), headers='')
+            yield json_data
 
         next_page = response.xpath(sel.NEXT_PAGE).extract_first()
 

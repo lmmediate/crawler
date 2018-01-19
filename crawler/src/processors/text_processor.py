@@ -15,10 +15,6 @@ def remove_junk(s):
     return s
 
 
-def remove_literals_ws(s):
-    return re.sub('[а-яА-Я\s]', '', s)
-
-
 def try_float(val):
     res = []
     try:
@@ -49,13 +45,16 @@ def make_date(raw):
 
 
 def parse_date_in(s):
-    raw = split_by(remove_literals_ws(remove_junk(s)), '—')[0]
-    return make_date(raw)
+    raw = re.findall(r'\d{2}/\d{2}', s)
+    return make_date(raw[0])
 
 
 def parse_date_out(s):
-    raw = split_by(remove_literals_ws(remove_junk(s)), '—')[1]
-    return make_date(raw)
+    raw = re.findall(r'\d{2}/\d{2}', s)
+    if len(raw) > 1:
+        return make_date(raw[1])
+    else:
+        return make_date(raw[0])
 
 
 # EOF

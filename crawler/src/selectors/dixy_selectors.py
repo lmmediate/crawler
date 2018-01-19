@@ -15,8 +15,8 @@ ITEM = '//div[contains(@class, "elem-product ")]'
 
 # Inner repetitive divs.
 #
-DESCRIPTION = '//div[@class="elem-product__description"]'
-INFO = '//div[@class="elem-product__info"]'
+DESCRIPTION = 'div[@class="elem-product__description"]'
+INFO = 'div[@class="elem-product__info"]'
 PRICE_CONTAINER = INFO + '/div[@class="elem-product__price-container"]'
 PRICES = PRICE_CONTAINER + '/div[@class="elem-product__prices"]'
 
@@ -34,7 +34,6 @@ alue"]/text()' + ' | ' + PRICE_CONTAINER + '/div[@class="just-now"]/text()'
 CONDITION = PRICE_CONTAINER + '/div[contains(@class,"promopack")]/div[@class="\
 text"]/text()'
 DATE = 'div[contains(@class, "elem-badge-cornered")]/text()'
-
 
 # Pagination selector.
 #
