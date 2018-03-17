@@ -6,12 +6,8 @@ from time import time, gmtime, strftime
 from json import dumps
 import requests
 
-# TODO: Fix relative paths.
-#
-sys.path.insert(0, './src/selectors/')
-sys.path.insert(0, './src/processors/')
-import dixy_selectors as sel
-import text_processor as proc
+from selectors import dixy_selectors as sel
+from processors import text_processor as proc
 
 
 class DixySpider(scrapy.Spider):
@@ -22,6 +18,7 @@ class DixySpider(scrapy.Spider):
     def parse(self, response):
         for item in response.xpath(sel.ITEM):
             json_data = {
+                'shopId': 1,
                 'name': proc.process(item.xpath(sel.NAME).extract_first()),
                 'category': proc.process(item.xpath(sel.CATEGORY).extract_first()),
                 'imageUrl': sel.URL_CORE + item.xpath(sel.IMG).extract_first(),
@@ -37,7 +34,7 @@ class DixySpider(scrapy.Spider):
                 'condition': proc.process(item.xpath(sel.CONDITION).extract_first(default='-')),
             }
 
-            requests.post('http://localhost:8080/api/sales/', data=dumps(json_data), headers=self.headers)
+            # requests.post('http://46.17.44.125:8080/api/shops/', data=dumps(json_data), headers=self.headers)
             yield json_data
 
         next_page = response.xpath(sel.NEXT_PAGE).extract_first()
