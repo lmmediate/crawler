@@ -12,6 +12,7 @@ def remove_junk(s):
     # s = re.sub(r'&.+;', '', s)
     s = re.sub(r'\*+', '', s)
     s = re.sub(r'\s+', ' ', s)
+    s = re.sub(r'\xa0', '', s)
     return s
 
 
