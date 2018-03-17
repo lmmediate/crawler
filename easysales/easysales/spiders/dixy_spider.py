@@ -7,8 +7,8 @@ import requests
 from time import time, gmtime, strftime
 from json import dumps
 from easysales.items import DixyItem
-from selectors import dixy_selectors as sel
-from processors import text_processor as proc
+from es_selectors import dixy_selectors as sel
+from es_processors import text_processor as proc
 
 
 class DixySpider(scrapy.Spider):

@@ -4,7 +4,7 @@
 #
 
 rm -rf ./out/*
-scrapy crawl dixy -o ./out/sales.json
+scrapy crawl dixy
 
 
 # EOF
