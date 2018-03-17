@@ -26,7 +26,7 @@ class DixySpider(scrapy.Spider):
                 item.xpath(sel.OLD_PRICE_RIGHT).extract_first(default='0'), '.'),
             dixy_item['newPrice'] = proc.concat(item.xpath(sel.NEW_PRICE_LEFT).extract_first(default='0'),
                 item.xpath(sel.NEW_PRICE_RIGHT).extract_first(default='0'), '.'),
-            dixy_item['discount'] = proc.process(item.xpath(sel.DISCOUNT).extract_first()),
+            dixy_item['discount'] = proc.process_str(item.xpath(sel.DISCOUNT).extract_first()),
             dixy_item['dateIn'] = proc.split_by(proc.process(item.xpath(sel.DATE).extract_first()), '-')[0],
             dixy_item['dateIn'] = proc.parse_date_in(item.xpath(sel.DATE).extract_first()),
             dixy_item['dateOut'] = proc.parse_date_out(item.xpath(sel.DATE).extract_first()),

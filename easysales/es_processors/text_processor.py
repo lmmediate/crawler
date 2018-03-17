@@ -33,6 +33,10 @@ def process(val):
     return try_float(remove_junk(val))
 
 
+def process_str(val):
+    return remove_junk(val)
+
+
 def split_by(val, delim):
     return val.split(delim)
 
