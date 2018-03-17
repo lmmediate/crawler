@@ -27,12 +27,12 @@ class GeneralProcessPipeline(object):
 class JsonWriterPipeline(object):
 
     def open_spider(self, spider):
-        self.file = open('items.json', 'w')
+        self.file = open(const['URI_JSON_OUT'], 'w')
         self.file.write('[')
 
     def close_spider(self, spider):
         self.file.close()
-        self.file = open('items.json', 'r+')
+        self.file = open(const['URI_JSON_OUT'], 'r+')
         data = self.file.read()
         self.file.seek(0)
         self.file.write(data[:-2])
