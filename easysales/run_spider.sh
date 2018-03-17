@@ -4,7 +4,7 @@
 #
 
 rm -rf ./out/*
-scrapy runspider ./src/spiders/dixy_spider.py -o ./out/sales.json
+scrapy crawl dixy -o ./out/sales.json
 
 
 # EOF
