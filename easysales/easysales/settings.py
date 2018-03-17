@@ -5,12 +5,10 @@ BOT_NAME = 'easysales'
 SPIDER_MODULES = ['easysales.spiders']
 NEWSPIDER_MODULE = 'easysales.spiders'
 
-DOWNLOADER_MIDDLEWARES = {
-    # Engine side
-    'scrapy_splash.SplashCookiesMiddleware': 723,
-    'scrapy_splash.SplashMiddleware': 725,
-    'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
-    # Downloader side
+ITEM_PIPELINES = {
+    'easysales.pipelines.GeneralProcessPipeline': 300,
+    'easysales.pipelines.JsonWriterPipeline': 400,
+    'easysales.pipelines.DataBaseWriterPipeLine': 600,
 }
 
 # DOWNLOADER_MIDDLEWARES = {
