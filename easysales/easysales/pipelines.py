@@ -16,12 +16,7 @@ from config import const
 class GeneralProcessPipeline(object):
 
     def process_item(self, item, spider):
-        # Do post request for adding an item to the DB here.
-        #
-        item_ret = DixyItem()
-        for k, v in dict(item).items():
-            item_ret[k] = item[k][0]
-        return item_ret
+        return item
 
 
 class JsonWriterPipeline(object):
