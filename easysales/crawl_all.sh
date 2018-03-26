@@ -5,6 +5,7 @@
 
 rm -rf ./out/*
 scrapy crawl dixy
+scrapy crawl perekrestok
 
 
 # EOF
