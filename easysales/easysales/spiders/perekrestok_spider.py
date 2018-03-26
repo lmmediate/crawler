@@ -3,6 +3,7 @@
 import scrapy
 
 from urlparse import urljoin
+from time import time, gmtime, strftime
 from es_selectors import perekrestok_selectors as sel
 from es_processors import text_processor as proc
 
@@ -26,16 +27,23 @@ class PerekrestokSpider(scrapy.Spider):
             current_category = response.xpath(sel.CURRENT_CATEGORY).extract_first()
             current_category = proc.remove_junk(proc.split_by(current_category, '-')[0])
 
+        items_count = len(response.xpath(sel.ROOT_NODE).xpath(sel.ITEM).extract())
+
         for item in response.xpath(sel.ROOT_NODE).xpath(sel.ITEM):
             yield {
-                    'category': current_category,
                     'name': proc.remove_junk(item.xpath(sel.NAME).extract_first()),
+                    'category': current_category,
+                    'imageUrl': urljoin(sel.URL_CORE, item.xpath(sel.IMG).extract_first()),
+                    'newPrice': proc.try_float(item.xpath(sel.NEW_PRICE).extract_first()),
+                    'oldPrice': proc.try_float(item.xpath(sel.OLD_PRICE).extract_first(default=0)),
+                    'crawlDate': strftime('%Y-%m-%d', gmtime()),
+                    'shopId': 2,
                     }
 
-        # next_page = response.xpath(sel.NEXT_PAGE).extract_first()
+        next_page = response.xpath(sel.NEXT_PAGE).extract_first()
 
-        # if next_page is not None and items_count > 0:
-        #     yield response.follow(next_page, self.parse_items)
+        if next_page is not None and items_count > 0:
+            yield response.follow(next_page, self.parse_items)
 
 
 

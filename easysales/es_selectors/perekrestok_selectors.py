@@ -19,6 +19,9 @@ ITEM = 'li/div[contains(@class, "xf-product")]'
 #
 NAME = 'div[@class="xf-product__title xf-product-title"]/a[@class="xf-product-\
 title__link js-product__title"]/text()'
+IMG = 'figure/a/img/@data-src'
+NEW_PRICE = 'div/div[contains(@class, "xf-product-cost__current")]/@data-cost'
+OLD_PRICE = 'div/div[contains(@class, "xf-price xf-product-cost__prev")]/@data-cost'
 
 # Pagination selector.
 #
