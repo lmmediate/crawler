@@ -9,7 +9,6 @@ import re
 import os
 import json
 import requests
-from easysales.items import DixyItem
 from config import const
 
 

@@ -4,6 +4,7 @@ import scrapy
 
 from urlparse import urljoin
 from time import time, gmtime, strftime
+from easysales.items import PerekrestokItem
 from es_selectors import perekrestok_selectors as sel
 from es_processors import text_processor as proc
 
@@ -30,15 +31,15 @@ class PerekrestokSpider(scrapy.Spider):
         items_count = len(response.xpath(sel.ROOT_NODE).xpath(sel.ITEM).extract())
 
         for item in response.xpath(sel.ROOT_NODE).xpath(sel.ITEM):
-            yield {
-                    'name': proc.remove_junk(item.xpath(sel.NAME).extract_first()),
-                    'category': current_category,
-                    'imageUrl': urljoin(sel.URL_CORE, item.xpath(sel.IMG).extract_first()),
-                    'newPrice': proc.try_float(item.xpath(sel.NEW_PRICE).extract_first()),
-                    'oldPrice': proc.try_float(item.xpath(sel.OLD_PRICE).extract_first(default=0)),
-                    'crawlDate': strftime('%Y-%m-%d', gmtime()),
-                    'shopId': 2,
-                    }
+            pk_item = PerekrestokItem()
+            pk_item['name'] = proc.remove_junk(item.xpath(sel.NAME).extract_first())
+            pk_item['category'] = current_category
+            pk_item['imageUrl'] = urljoin(sel.URL_CORE, item.xpath(sel.IMG).extract_first())
+            pk_item['newPrice'] = proc.try_float(item.xpath(sel.NEW_PRICE).extract_first())
+            pk_item['oldPrice'] = proc.try_float(item.xpath(sel.OLD_PRICE).extract_first(default=0))
+            pk_item['crawlDate'] = strftime('%Y-%m-%d', gmtime())
+            pk_item['shopId'] = 2
+            yield pk_item
 
         next_page = response.xpath(sel.NEXT_PAGE).extract_first()
 
