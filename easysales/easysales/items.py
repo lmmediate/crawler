@@ -17,5 +17,10 @@ class DixyItem(EasySalesItem):
     dateOut = scrapy.Field()
     condition = scrapy.Field()
 
+
+class PerekrestokItem(EasySalesItem):
+    category = scrapy.Field()
+    oldPrice = scrapy.Field()
+
 # EOF
 
