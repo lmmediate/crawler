@@ -2,11 +2,16 @@
 
 import scrapy
 
-from urlparse import urljoin
 from time import time, gmtime, strftime
 from easysales.items import PerekrestokItem
 from es_selectors import perekrestok_selectors as sel
 from es_processors import text_processor as proc
+# Python2 v Python3 compatibility trick.
+#
+try:
+    from urllib.parse import urlparse
+except ImportError:
+    from urlparse import urlparse
 
 
 class PerekrestokSpider(scrapy.Spider):
