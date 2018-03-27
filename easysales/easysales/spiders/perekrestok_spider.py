@@ -6,12 +6,6 @@ from time import time, gmtime, strftime
 from easysales.items import PerekrestokItem
 from es_selectors import perekrestok_selectors as sel
 from es_processors import text_processor as proc
-# Python2 v Python3 compatibility trick.
-#
-try:
-    from urllib.parse import urlparse
-except ImportError:
-    from urlparse import urlparse
 
 
 class PerekrestokSpider(scrapy.Spider):
@@ -22,8 +16,7 @@ class PerekrestokSpider(scrapy.Spider):
         categories_links = response.xpath(sel.CATEGORIES).extract()
         categories_links = categories_links[:len(categories_links)//2]
         for category in categories_links:
-            url = urljoin(sel.URL_CORE, category)
-            yield scrapy.Request(url=url, callback=self.parse_items)
+            yield scrapy.Request(url=response.urljoin(category), callback=self.parse_items)
 
     def parse_items(self, response):
         current_category = ''
@@ -39,7 +32,7 @@ class PerekrestokSpider(scrapy.Spider):
             pk_item = PerekrestokItem()
             pk_item['name'] = proc.remove_junk(item.xpath(sel.NAME).extract_first())
             pk_item['category'] = current_category
-            pk_item['imageUrl'] = urljoin(sel.URL_CORE, item.xpath(sel.IMG).extract_first())
+            pk_item['imageUrl'] = sel.URL_CORE + item.xpath(sel.IMG).extract_first()
             pk_item['newPrice'] = proc.try_float(item.xpath(sel.NEW_PRICE).extract_first())
             pk_item['oldPrice'] = proc.try_float(item.xpath(sel.OLD_PRICE).extract_first(default=0))
             pk_item['crawlDate'] = strftime('%Y-%m-%d', gmtime())
