@@ -36,6 +36,8 @@ class PerekrestokSpider(scrapy.Spider):
             pk_item['newPrice'] = proc.try_float(item.xpath(sel.NEW_PRICE).extract_first())
             pk_item['oldPrice'] = proc.try_float(item.xpath(sel.OLD_PRICE).extract_first(default=0))
             pk_item['crawlDate'] = strftime('%Y-%m-%d', gmtime())
+            pk_item['dateIn'] = strftime('%Y-%m-%d', gmtime())
+            pk_item['dateOut'] = strftime('%Y-%m-%d', gmtime())
             pk_item['shopId'] = 2
             yield pk_item
 
