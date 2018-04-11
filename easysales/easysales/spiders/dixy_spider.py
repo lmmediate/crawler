@@ -3,6 +3,7 @@
 import scrapy
 import sys
 import requests
+import time
 
 from time import time, gmtime, strftime
 from json import dumps
@@ -14,13 +15,25 @@ from es_processors import text_processor as proc
 class DixySpider(scrapy.Spider):
     name = 'dixy'
     start_urls = sel.URLS
+    d_categs = {}
 
     def parse(self, response):
+        categories = response.xpath(sel.CATEGORY_ID).extract()
+        categories_names = response.xpath(sel.CATEGORY_NAME).extract()[1:]
+        self.d_categs = dict(zip(categories, categories_names))
+        print(self.d_categs)
+        for c in categories:
+            url = sel.URLS[0] + '?category=' + c
+            time.sleep(0.5)
+            yield scrapy.Request(url, callback=self.after_parse, dont_filter=True)
+
+    def after_parse(self, response):
         for item in response.xpath(sel.ITEM):
             dixy_item = DixyItem()
             dixy_item['shopId'] = 1
             dixy_item['name'] = proc.process(item.xpath(sel.NAME).extract_first())
-            dixy_item['category'] = proc.process(item.xpath(sel.CATEGORY).extract_first())
+            # dixy_item['category'] = proc.process(item.xpath(sel.CATEGORY).extract_first())
+            dixy_item['category'] = proc.process(self.d_categs[response.url[-3:]])
             dixy_item['imageUrl'] = sel.URL_CORE + item.xpath(sel.IMG).extract_first()
             dixy_item['oldPrice'] = proc.concat(item.xpath(sel.OLD_PRICE_LEFT).extract_first(default='0'),
                 item.xpath(sel.OLD_PRICE_RIGHT).extract_first(default='0'), '.')

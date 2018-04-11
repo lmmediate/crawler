@@ -2,8 +2,13 @@
 
 # Start urls.
 #
-URLS = ['https://dixy.ru/akcii/skidki-nedeli']
+URLS = ['https://dixy.ru/akcii/skidki-nedeli/']
 URL_CORE = 'https://dixy.ru'
+
+# All categories ids.
+#
+CATEGORY_ID = '//input[@name="CATEGORY"]/@value'
+CATEGORY_NAME = '//span[@class="input-text"]/text()'
 
 
 # Item attributes.
