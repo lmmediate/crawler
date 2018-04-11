@@ -3,9 +3,8 @@
 import scrapy
 import sys
 import requests
-import time
 
-from time import time, gmtime, strftime
+from time import time, sleep, gmtime, strftime
 from json import dumps
 from easysales.items import DixyItem
 from es_selectors import dixy_selectors as sel
@@ -24,7 +23,7 @@ class DixySpider(scrapy.Spider):
         print(self.d_categs)
         for c in categories:
             url = sel.URLS[0] + '?category=' + c
-            time.sleep(0.5)
+            sleep(0.5)
             yield scrapy.Request(url, callback=self.after_parse, dont_filter=True)
 
     def after_parse(self, response):
