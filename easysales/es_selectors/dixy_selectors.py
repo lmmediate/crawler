@@ -17,6 +17,8 @@ CATEGORY_NAME = '//span[@class="input-text"]/text()'
 # Root node.
 #
 ITEM = '//div[contains(@class, "elem-product ")]'
+DAY_ITEM = 'Товар дня'
+DAY_ITEM_QUERY = '?PRODUCT_DAY=Y'
 
 # Inner repetitive divs.
 #

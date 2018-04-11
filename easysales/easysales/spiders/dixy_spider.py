@@ -25,6 +25,8 @@ class DixySpider(scrapy.Spider):
             url = sel.URLS[0] + '?category=' + c
             sleep(0.5)
             yield scrapy.Request(url, callback=self.after_parse, dont_filter=True)
+        sleep(1)
+        yield scrapy.Request(sel.URLS[0] + sel.DAY_ITEM_QUERY, callback=self.after_parse, dont_filter=True)
 
     def after_parse(self, response):
         for item in response.xpath(sel.ITEM):
@@ -32,7 +34,12 @@ class DixySpider(scrapy.Spider):
             dixy_item['shopId'] = 1
             dixy_item['name'] = proc.process(item.xpath(sel.NAME).extract_first())
             # dixy_item['category'] = proc.process(item.xpath(sel.CATEGORY).extract_first())
-            dixy_item['category'] = proc.process(self.d_categs[response.url[-3:]])
+            categ = response.url[-3:]
+            print response.url
+            if categ != sel.DAY_ITEM_QUERY[-3:]:
+                dixy_item['category'] = proc.process(self.d_categs[categ])
+            else:
+                dixy_item['category'] = sel.DAY_ITEM
             dixy_item['imageUrl'] = sel.URL_CORE + item.xpath(sel.IMG).extract_first()
             dixy_item['oldPrice'] = proc.concat(item.xpath(sel.OLD_PRICE_LEFT).extract_first(default='0'),
                 item.xpath(sel.OLD_PRICE_RIGHT).extract_first(default='0'), '.')
